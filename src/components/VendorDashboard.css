@@ -1,0 +1,41 @@
+.vendor-dashboard {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  padding: 2rem;
+}
+
+.vendor-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.vendor-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: cyan;
+}
+
+.vendor-header p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.vendor-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.vendor-section {
+  background: #111;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid #222;
+  transition: transform 0.3s ease;
+}
+
+.vendor-section:hover {
+  transform: translateY(-5px);
+  border-color: cyan;
+}
