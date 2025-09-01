@@ -2,10 +2,21 @@ import React from "react";
 import VendorCard from "./VendorCard";
 import "./VendorGrid.css";
 
+import use1 from "../images/gal1.jpg";
+import use2 from "../images/tunde.jpg";
+import use3 from "../images/gal2.jpg";
+import use4 from "../images/guy1.jpg";
+import use5 from "../images/gal3.jpg";
+import use6 from "../images/guy2.jpg";
+import use7 from "../images/jane.jpg";
+import use8 from "../images/guy3.jpg";
+import use9 from "../images/mary.jfif";
+import use10 from "../images/guy4.jpg";
+
 const vendors = [
   {
     name: "Adaobi Nwosu",
-    image: "https://randomuser.me/api/portraits/women/65.jpg", 
+    image: use1, 
     category: "Caterers",
     bio: "Professional",
     description: "Expert in Nigerian dishes and event catering.",
@@ -13,7 +24,7 @@ const vendors = [
   },
   {
     name: "Tunde Balogun",
-    image: "https://randomuser.me/api/portraits/men/52.jpg",
+    image: use2,
     category: "Event Planners",
     bio: "Creative Strategist",
     description: "Turns every event into a magical experience.",
@@ -21,7 +32,7 @@ const vendors = [
   },
   {
     name: "Chika Okoro",
-    image: "https://randomuser.me/api/portraits/women/22.jpg",
+    image: use3,
     category: "Drink Vendors",
     bio: "Mixologist",
     description: "Refreshing drinks for weddings and parties.",
@@ -29,7 +40,7 @@ const vendors = [
   },
   {
     name: "Emeka Obi",
-    image: "https://randomuser.me/api/portraits/men/38.jpg",
+    image: use4,
     category: "Caterers",
     bio: "Professional Chef",
     description: "Spicy and local menu specialist.",
@@ -37,7 +48,7 @@ const vendors = [
   },
   {
     name: "Zainab Yusuf",
-    image: "https://randomuser.me/api/portraits/women/56.jpg",
+    image: use5,
     category: "Event Planners",
     bio: "Decorator",
     description: "Elegant, modern designs tailored for any event.",
@@ -45,7 +56,7 @@ const vendors = [
   },
   {
     name: "Kunle Ajayi",
-    image: "https://randomuser.me/api/portraits/men/47.jpg",
+    image: use6,
     category: "Drink Vendors",
     bio: "Bartender",
     description: "Cocktail expert for indoor and outdoor parties.",
@@ -53,7 +64,7 @@ const vendors = [
   },
   {
     name: "Ngozi Eze",
-    image: "https://randomuser.me/api/portraits/women/88.jpg",
+    image: use7,
     category: "Caterers",
     bio: "Pastry Chef",
     description: "Bakes cakes, small chops, and event treats.",
@@ -61,7 +72,7 @@ const vendors = [
   },
   {
     name: "Ibrahim Musa",
-    image: "https://randomuser.me/api/portraits/men/29.jpg",
+    image: use8,
     category: "Drink Vendors",
     bio: "Juice Vendor",
     description: "Natural fruit juices for any kind of celebration.",
@@ -69,7 +80,7 @@ const vendors = [
   },
   {
     name: "Yetunde Alabi",
-    image: "https://randomuser.me/api/portraits/women/74.jpg",
+    image: use9,
     category: "Event Planners",
     bio: "Logistics Coordinator",
     description: "Handles logistics for large weddings and parties.",
@@ -77,7 +88,7 @@ const vendors = [
   },
   {
     name: "Femi Durojaiye",
-    image: "https://randomuser.me/api/portraits/men/64.jpg",
+    image: use10,
     category: "Caterers",
     bio: "Chef & Decorator",
     description: "Combines cooking with small event decor.",

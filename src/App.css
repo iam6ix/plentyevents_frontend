@@ -145,12 +145,16 @@ body {
   .btn-light{
     justify-content: center;
     display: flex;
+    width: auto;
+    margin-left: 30px;
   }
 
   .btn-dark{
-    width: 92%;
+    width: auto;
     display: flex;
     justify-content: center;
+    margin-left: 30px;
+
   }
 }
 
