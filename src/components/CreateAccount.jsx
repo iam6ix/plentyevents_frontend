@@ -446,7 +446,7 @@ const CreateAccount = () => {
               </select>
             </div>
 
-            {/* ✅ Role Selection */}
+            {/* ✅ Role Selection
             <div className="input-group role-select">
               <label>
                 <input
@@ -469,7 +469,7 @@ const CreateAccount = () => {
                 />
                 Worker
               </label>
-            </div>
+            </div> */}
 
             <div className="input-group">
               <input
