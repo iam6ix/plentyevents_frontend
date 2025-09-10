@@ -51,12 +51,12 @@ function HomePage() {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <div className="buttons">
-            <a href="/vendor-register" className="btn btn-dark">
+            <Link to="/vendor-register" className="btn btn-dark">
               Join as a Vendor →
-            </a>
-            <a href="/create-account" className="btn btn-light">
+            </Link>
+            <Link to="/create-account" className="btn btn-light">
               Join as a Waiter →
-            </a>
+            </Link>
           </div>
         </div>
       </div>
