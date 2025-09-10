@@ -35,7 +35,7 @@ const PrivacyPolicy = () => {
         <section data-aos="fade-up" data-aos-delay="300">
           <h2>3. Data Sharing and Protection</h2>
           <p>
-            We never sell your data. We implement strict security measures and only share with trusted vendors or legal authorities when required.
+            We never sell your data. We implement strict security measures and only share with trusted waiters or legal authorities when required.
           </p>
         </section>
 

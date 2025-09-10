@@ -9,27 +9,21 @@ import "aos/dist/aos.css";
 
 const Login = () => {
   const navigate = useNavigate();
-
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: false,
-    });
+    AOS.init({ duration: 800, once: false });
   }, []);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "", // ✅ vendor or worker
+    role: "",
   });
   const [error, setError] = useState("");
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle login (mocked without Firebase)
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -39,15 +33,17 @@ const Login = () => {
       return;
     }
 
-    // ✅ Simple role-based redirect
+    // ✅ Save to localStorage
+    const user = { email: formData.email, role: formData.role };
+    localStorage.setItem("user", JSON.stringify(user));
+
     if (formData.role === "vendor") {
-      navigate("/dashboard/vendor");
-    } else if (formData.role === "worker") {
-      navigate("/dashboard/worker");
+      navigate("/vendor-dashboard");
     } else {
-      setError("Invalid account type. Please select Vendor or Worker.");
+      navigate("/worker-dashboard");
     }
   };
+
 
   return (
     <div className="auth-page">
@@ -135,7 +131,7 @@ const Login = () => {
           </div>
 
           <p className="switch-link">
-            Don’t have an account? <Link to="/create-account">Register</Link>
+            Don’t have an account? <Link to="/register ">Register</Link>
           </p>
         </div>
       </div>

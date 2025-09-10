@@ -44,7 +44,7 @@ const Services = () => {
       <section className="why-us" data-aos="fade-right">
         <h2>Why Choose Us?</h2>
         <ul>
-          <li>Trusted and verified vendors</li>
+          <li>Trusted and verified waiters</li>
           <li>Quality services tailored to your needs</li>
           <li>Easy booking and communication</li>
         </ul>
@@ -52,7 +52,7 @@ const Services = () => {
 
       <div className="services-cta" data-aos="zoom-in">
         <h2>Ready to Hire?</h2>
-        <button onClick={() => navigate("/create-account")}>Join Now</button>
+        <button onClick={() => navigate("/vendor-register")}>Join Now</button>
       </div>
     </div>
   );

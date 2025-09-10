@@ -28,18 +28,19 @@ const Navbar = () => {
         <Link to="/contact" style={{ textDecoration: "none", color: "white" }}>Contact</Link>
         <Link to="/faq" style={{ textDecoration: "none", color: "white" }}>FAQ</Link>
         <button className="join-btn">
-          <Link to="/create-account" style={{ textDecoration: "none", color: "black" }}>
+          <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
             Join
           </Link>
         </button>
+
       </div>
 
       {/* Hamburger button */}
       <div className={`hamburger ${menuOpen ? "active" : ""}`} onClick={toggleMenu}>
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </nav>
   );
 };

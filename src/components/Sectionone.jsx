@@ -59,7 +59,7 @@ const Sectionone = () => {
             <p>{vendor.description}</p>
             <button
               className="hire-btn"
-              onClick={() => navigate('/create-account')}
+              onClick={() => navigate('vendor-register')}
             >
               Hire
             </button>

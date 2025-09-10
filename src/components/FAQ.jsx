@@ -19,7 +19,7 @@ const FAQ = () => {
         <section data-aos="fade-up">
           <h2>What is PLENTYEVENTS?</h2>
           <p>
-            PLENTYEVENTS is a platform that connects users with reliable vendors for catering,
+            PLENTYEVENTS is a platform that connects users with reliable waiters for catering,
             drinks, cocktails, and event decoration services. We make hiring fast and trusted.
           </p>
         </section>
@@ -35,21 +35,21 @@ const FAQ = () => {
         <section data-aos="fade-up">
           <h2>Is it free to use?</h2>
           <p>
-            Yes, browsing vendors and creating an account is completely free. We only charge vendors a small commission for bookings made through PLENTYEVENTS.
+            Yes, browsing waiters and creating an account is completely free. We only charge vendors a small commission for bookings made through PLENTYEVENTS.
           </p>
         </section>
 
         <section data-aos="fade-up">
-          <h2>How do I contact a vendor?</h2>
+          <h2>How do I contact a waiter?</h2>
           <p>
-            Simply click the "Hire" button on a vendor’s profile. You’ll be prompted to log in or create an account to proceed with messaging and booking.
+            Simply click the "Hire" button on a waiter’s profile. You’ll be prompted to log in or create an account to proceed with messaging and booking.
           </p>
         </section>
 
         <section data-aos="fade-up">
-          <h2>Can I rate or review a vendor?</h2>
+          <h2>Can I rate or review a waiter?</h2>
           <p>
-            Yes, after a successful booking, you'll be able to leave feedback and rate your vendor experience.
+            Yes, after a successful booking, you'll be able to leave feedback and rate your waiter's experience.
           </p>
         </section>
       </div>

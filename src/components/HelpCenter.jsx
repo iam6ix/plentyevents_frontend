@@ -19,28 +19,28 @@ const HelpCenter = () => {
         <section data-aos="fade-up">
           <h2>Getting Started</h2>
           <p>
-            To get started, simply create a free account using your email or sign in with Google or Apple. Once logged in, you can browse, hire, and connect with verified vendors.
+            To get started, simply create a free account using your email or sign in with Google or Apple. Once logged in, you can browse, hire, and connect with verified waiters.
           </p>
         </section>
 
         <section data-aos="fade-up">
           <h2>Editing Your Profile</h2>
           <p>
-            Go to your account dashboard and click on “Edit Profile.” Update your information, profile image, or vendor preferences easily from there.
+            Go to your account dashboard and click on “Edit Profile.” Update your information, profile image, or waiter preferences easily from there.
           </p>
         </section>
 
         <section data-aos="fade-up">
           <h2>Managing Bookings</h2>
           <p>
-            All your bookings can be found under the “My Bookings” tab. From there, you can confirm events, contact vendors, or cancel if necessary.
+            All your bookings can be found under the “My Bookings” tab. From there, you can confirm events, contact waiters, or cancel if necessary.
           </p>
         </section>
 
         <section data-aos="fade-up">
           <h2>Reporting an Issue</h2>
           <p>
-            If you experience any issues with a vendor or the platform, go to the “Report” section in your dashboard or contact our support team directly at <strong>support@dista.com</strong>.
+            If you experience any issues with a waiter or the platform, go to the “Report” section in your dashboard or contact our support team directly at <strong>support@dista.com</strong>.
           </p>
         </section>
 

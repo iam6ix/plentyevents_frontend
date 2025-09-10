@@ -42,7 +42,7 @@ const TermsAndConditions = () => {
         <section data-aos="fade-up" data-aos-delay="400">
           <h2>4. Vendor Agreements</h2>
           <p>
-            When hiring a vendor through PLENTYEVENTS, separate service terms may apply between you and the vendor. PLENTYEVENTS is not liable for disputes.
+            When hiring a waiter through PLENTYEVENTS, separate service terms may apply between you and the waiter. PLENTYEVENTS is not liable for disputes.
           </p>
         </section>
 

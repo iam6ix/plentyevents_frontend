@@ -13,15 +13,15 @@ const About = () => {
       {/* Hero Section */}
       <section className="about-hero" data-aos="fade-down">
         <h1>About PLENTYEVENTS</h1>
-        <p>Your trusted platform to connect with top-tier event vendors.</p>
+        <p>Your trusted platform to connect with top-tier event waiters.</p>
       </section>
 
       {/* Mission Section */}
       <section className="about-section" data-aos="fade-up">
         <h2>Our Mission</h2>
         <p>
-          At PLENTYEVENTS, we aim to simplify the vendor discovery process by connecting
-          event organizers with verified, professional vendors across Nigeria. We
+          At PLENTYEVENTS, we aim to simplify the waiter discovery process by connecting
+          event organizers with verified, professional waiters across Nigeria. We
           believe in reliability, trust, and convenience.
         </p>
       </section>
@@ -30,7 +30,7 @@ const About = () => {
       <section className="about-section" data-aos="fade-right">
         <h2>How It Works</h2>
         <ol>
-          <li>Browse vendor profiles across various categories.</li>
+          <li>Browse waiter profiles across various categories.</li>
           <li>Read detailed information and customer reviews.</li>
           <li>Click "Hire" to begin the booking process — it's that easy!</li>
         </ol>
@@ -50,7 +50,7 @@ const About = () => {
       {/* Call to Action */}
       <section className="about-section call-to-action" data-aos="fade-up">
         <h2>Ready to Hire?</h2>
-        <p>Join our growing network of users and vendors today.</p>
+        <p>Join our growing network of users and waiters today.</p>
         <a href="/create-account" className="cta-button">Create an Account</a>
       </section>
     </div>

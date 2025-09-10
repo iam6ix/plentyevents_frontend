@@ -9,7 +9,6 @@ import iamImg from "../images/iam.jpeg";
 
 const CreateAccount = () => {
   const navigate = useNavigate();
-
   useEffect(() => {
     AOS.init({ duration: 1000, once: false });
   }, []);
@@ -38,7 +37,6 @@ const CreateAccount = () => {
     guarantorPhone: "",
     guarantorEmail: "",
     guarantorOccupation: "",
-    role: "", // Vendor or Worker
     password: "",
     service: "",
   });
@@ -46,63 +44,30 @@ const CreateAccount = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit (no Firebase, just local)
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    // basic validation
-    if (!formData.fullName || !formData.email || !formData.password || !formData.role) {
+    if (!formData.fullName || !formData.email || !formData.password) {
       setError("Please fill in all required fields.");
       return;
     }
 
-    // simulate successful signup
-    setSuccess("Account created successfully!");
-    setFormData({
-      fullName: "",
-      dob: "",
-      gender: "",
-      maritalStatus: "",
-      state: "",
-      lga: "",
-      address: "",
-      phone: "",
-      email: "",
-      nextOfKin: "",
-      crime: "",
-      substance: "",
-      education: "",
-      waiterExperience: "",
-      training: "",
-      availability: "",
-      pressure: "",
-      guarantorName: "",
-      guarantorRelation: "",
-      guarantorAddress: "",
-      guarantorPhone: "",
-      guarantorEmail: "",
-      guarantorOccupation: "",
-      role: "",
-      password: "",
-      service: "",
-    });
+    //  Save user in localStorage
+    const user = { role: "worker", email: formData.email, name: formData.fullName };
+    localStorage.setItem("user", JSON.stringify(user));
 
-    // Redirect based on role
+    setSuccess("Account created successfully!");
     setTimeout(() => {
-      if (formData.role === "vendor") {
-        navigate("/dashboard/vendor");
-      } else {
-        navigate("/dashboard/worker");
-      }
+      navigate("/worker-dashboard");
     }, 1000);
   };
+
 
   return (
     <div className="auth-page">
@@ -112,7 +77,7 @@ const CreateAccount = () => {
           <p>Join our trusted platform for event planners and vendors</p>
 
           <form className="signup-form" onSubmit={handleSubmit}>
-            {/* ✅ Personal Information */}
+            {/*  Personal Information */}
             <div className="input-group">
               <input
                 type="text"
