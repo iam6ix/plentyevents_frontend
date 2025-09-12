@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-import Footer from "./components/Footer";
-import VendorGrid from "./components/VendorGrid";
+//Homepages
 import Navbar from "./components/Navbar";
-import CreateAccount from "./components/CreateAccount";
-import RegisterChoice from "./components/RegisterChoice";
-import Login from "./components/Login";
 import "./App.css";
 import Sectionone from "./components/Sectionone";
+import Footer from "./components/Footer";
+import VendorGrid from "./components/VendorGrid";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Services from "./components/Services";
@@ -18,10 +17,25 @@ import HelpCenter from "./components/HelpCenter";
 import HowItWorks from "./components/HowItWorks";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
+
+
+//Registration Pages
+import CreateAccount from "./components/CreateAccount";
+import Login from "./components/Login";
+
+//Dashboard(Vendor)
 import VendorDashboard from "./components/VendorDashboard";
+// import DashboardHome from "./components/dashboard/DashboardHome";
+// import Waiters from "./components/dashboard/Waiters";
+// import Listings from "./components/dashboard/Listings";
+// import Profile from "./components/dashboard/Profile";
+// import CreateListing from "./components/dashboard/CreateListing";
+// import Bookings from "./components/dashboard/Bookings";
+
+//Others
+import RegisterChoice from "./components/RegisterChoice";
 import WorkerDashboard from "./components/WorkerDashboard";
 import VendorRegister from "./components/VendorRegister";
-import { Navigate } from "react-router-dom";
 
 // Protect dashboards
 const ProtectedRoute = ({ children, role }) => {
@@ -79,6 +93,12 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/create-account" element={<CreateAccount />} />
       <Route path="/vendor-register" element={<VendorRegister />} />
+      {/* <Route path="/dashboard" element={<DashboardHome />} />
+        <Route path="/dashboard/listings" element={<Listings />} />
+        <Route path="/dashboard/create-listing" element={<CreateListing />} />
+        <Route path="/dashboard/profile" element={<Profile />} />
+        <Route path="/dashboard/bookings" element={<Bookings />} />
+        <Route path="/dashboard/waiters" element={<Waiters />} /> */}
       <Route path="/register" element={<RegisterChoice />} />
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<About />} />
