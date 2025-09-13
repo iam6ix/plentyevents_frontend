@@ -4,7 +4,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./VendorDashboard.css";
 
-/* ---------- Dashboard Home ---------- */
 const DashboardHome = ({ savedPicks, bookings, openPickDetail }) => (
   <div className="page-panel" data-aos="fade-up">
     <h2>Overview</h2>
@@ -33,13 +32,21 @@ const DashboardHome = ({ savedPicks, bookings, openPickDetail }) => (
 
     <div style={{ marginTop: 18 }}>
       <h3>Recent Saved Picks</h3>
+
       {savedPicks.length === 0 ? (
         <p className="muted">No saved picks yet — browse waiters and click “Pick”.</p>
       ) : (
         <div className="saved-preview">
           {savedPicks.slice(0, 6).map((p) => (
-            <button key={p.id} className="saved-item" onClick={() => openPickDetail(p)}>
-              <div className="saved-avatar">{p.name.split(" ").map(n => n[0]).join("")}</div>
+            <button
+              key={p.id}
+              className="saved-item"
+              onClick={() => openPickDetail(p)}
+              title={`Open ${p.name}`}
+            >
+              <div className="saved-avatar">
+                {p.picture ? <img src={p.picture} alt={p.name} /> : p.name.split(" ").map(n=>n[0]).join("")}
+              </div>
               <div className="saved-meta">
                 <strong>{p.name}</strong>
                 <div className="muted">{p.location} • {p.exp}</div>
@@ -52,72 +59,33 @@ const DashboardHome = ({ savedPicks, bookings, openPickDetail }) => (
   </div>
 );
 
-/* ---------- Waiters List ---------- */
-const WaitersList = ({ addPick }) => {
-  const mock = Array.from({ length: 12 }).map((_, i) => ({
-    id: i + 1,
-    name: `Waiter ${i + 1}`,
-    location: ["Lagos", "Abuja", "Enugu", "Kano"][i % 4],
-    exp: `${1 + (i % 5)} yrs`,
-    skills: i % 2 === 0 ? "Service" : "Bar",
-  }));
-
-  const [selected, setSelected] = useState(null);
-
+const WaitersList = ({ waiters, selected, setSelected }) => {
   return (
-    <div className="page-panel waiters-panel">
-      <h2>Waiters</h2>
-      <div className="waiters-grid" data-aos="fade-up">
-        <div className="waiters-list">
-          {mock.map((w) => (
-            <button
-              key={w.id}
-              className={`waiter-row ${selected?.id === w.id ? "active" : ""}`}
-              onClick={() => setSelected(w)}
-            >
-              <div className="row-left">
-                <div className="avatar">{w.name.split(" ").map(n => n[0]).join("")}</div>
-                <div>
-                  <strong>{w.name}</strong>
-                  <div className="muted">{w.location} • {w.exp}</div>
-                </div>
-              </div>
-              <div className="row-right">
-                <span className="skill">{w.skills}</span>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <div className="waiter-detail">
-          {selected ? (
-            <>
-              <h3>{selected.name}</h3>
-              <p><strong>Location:</strong> {selected.location}</p>
-              <p><strong>Experience:</strong> {selected.exp}</p>
-              <p><strong>Skills:</strong> {selected.skills}</p>
-              <div className="detail-actions">
-                <button
-                  className="btn primary"
-                  onClick={() => addPick(selected)}
-                >
-                  Pick
-                </button>
-                <button className="btn ghost">Message</button>
-              </div>
-            </>
-          ) : (
-            <div className="empty">
-              <p>Select a waiter from the list to view details</p>
+    <div className="waiters-list">
+      {waiters.map((w) => (
+        <button
+          key={w.id}
+          className={`waiter-row ${selected?.id === w.id ? "active" : ""}`}
+          onClick={() => setSelected(w)}
+        >
+          <div className="row-left">
+            <div className="avatar">
+              {w.picture ? <img src={w.picture} alt={w.name} /> : w.name[0]}
             </div>
-          )}
-        </div>
-      </div>
+            <div>
+              <strong>{w.name}</strong>
+              <div className="muted">{w.location} • {w.exp}</div>
+            </div>
+          </div>
+          <div className="row-right">
+            <span className="skill">{w.skills}</span>
+          </div>
+        </button>
+      ))}
     </div>
   );
 };
 
-/* ---------- Bookings ---------- */
 const Bookings = ({ bookings, updateBookingStatus }) => (
   <div className="page-panel" data-aos="fade-up">
     <h2>Bookings</h2>
@@ -135,18 +103,8 @@ const Bookings = ({ bookings, updateBookingStatus }) => (
             <td>{b.location}</td>
             <td>{b.status}</td>
             <td>
-              <button
-                className="btn ghost"
-                onClick={() => updateBookingStatus(b.id, "Confirmed")}
-              >
-                Confirm
-              </button>
-              <button
-                className="btn"
-                onClick={() => updateBookingStatus(b.id, "Cancelled")}
-              >
-                Cancel
-              </button>
+              <button className="btn ghost" onClick={() => updateBookingStatus(b.id, "Confirmed")}>Confirm</button>
+              <button className="btn" onClick={() => updateBookingStatus(b.id, "Cancelled")}>Cancel</button>
             </td>
           </tr>
         ))}
@@ -155,20 +113,19 @@ const Bookings = ({ bookings, updateBookingStatus }) => (
   </div>
 );
 
-/* ---------- Profile (editable + upload) ---------- */
 const Profile = ({ profile, saveProfile }) => {
-  const [form, setForm] = useState(profile);
+  const [form, setForm] = useState(profile || { name: "", brand: "", phone: "", email: "", picture: null });
 
-  useEffect(() => setForm(profile), [profile]);
+  useEffect(() => setForm(profile || { name: "", brand: "", phone: "", email: "", picture: null }), [profile]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleFile = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const f = e.target.files?.[0];
+    if (!f) return;
     const reader = new FileReader();
-    reader.onload = () => setForm((p) => ({ ...p, picture: reader.result }));
-    reader.readAsDataURL(file);
+    reader.onload = () => setForm(prev => ({ ...prev, picture: reader.result }));
+    reader.readAsDataURL(f);
   };
 
   const handleSave = (e) => {
@@ -182,39 +139,38 @@ const Profile = ({ profile, saveProfile }) => {
       <h2>Profile</h2>
       <p>Vendor profile — contact details, company info and settings.</p>
 
-      <form className="profile-grid" onSubmit={handleSave}>
-        <div>
-          <strong>Profile Picture</strong>
-          <div>
-            {form.picture ? (
-              <img src={form.picture} alt="Profile" className="profile-pic" />
-            ) : (
-              <div className="profile-pic placeholder">No Image</div>
-            )}
-          </div>
-          <input type="file" accept="image/*" onChange={handleFile} />
+      <form className="profile-form" onSubmit={handleSave}>
+        <div className="profile-left">
+          {form.picture ? (
+            <img src={form.picture} alt="Profile" className="profile-pic" />
+          ) : (
+            <div className="profile-pic placeholder">No Image</div>
+          )}
+          <label className="upload-btn">
+            Upload photo
+            <input type="file" accept="image/*" onChange={handleFile} />
+          </label>
         </div>
 
-        <div>
-          <label>
-            Vendor Name:
+        <div className="profile-right">
+          <label className="input-label">Vendor Name
             <input name="name" value={form.name} onChange={handleChange} />
           </label>
-          <label>
-            Company/Brand:
+
+          <label className="input-label">Company / Brand
             <input name="brand" value={form.brand} onChange={handleChange} />
           </label>
-          <label>
-            Phone:
+
+          <label className="input-label">Phone
             <input name="phone" value={form.phone} onChange={handleChange} />
           </label>
-          <label>
-            Email:
+
+          <label className="input-label">Email
             <input name="email" value={form.email} onChange={handleChange} />
           </label>
 
           <div style={{ marginTop: 12 }}>
-            <button className="btn btn-dark" type="submit">Save Changes</button>
+            <button className="btn primary" type="submit">Save Changes</button>
           </div>
         </div>
       </form>
@@ -222,37 +178,44 @@ const Profile = ({ profile, saveProfile }) => {
   );
 };
 
-/* ---------- Main VendorDashboard ---------- */
 export default function VendorDashboard() {
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false); // mobile sidebar
   const [active, setActive] = useState("dashboard");
   const [savedPicks, setSavedPicks] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("savedPicks") || "[]");
-    } catch {
-      return [];
-    }
+    try { return JSON.parse(localStorage.getItem("savedPicks") || "[]"); } catch { return []; }
   });
-
   const [bookings, setBookings] = useState([
     { id: 1, ref: "#A001", date: "2025-09-01", location: "Lagos", status: "Confirmed" },
     { id: 2, ref: "#A002", date: "2025-09-05", location: "Abuja", status: "Pending" },
   ]);
 
   const [profile, setProfile] = useState(() => {
-    try {
-      const p = localStorage.getItem("vendorProfile");
-      return p ? JSON.parse(p) : { name: "Acme Catering", brand: "Acme", email: "vendor@example.com", phone: "", picture: null };
-    } catch {
-      return { name: "Acme Catering", brand: "Acme", email: "vendor@example.com", phone: "", picture: null };
-    }
+    try { const p = localStorage.getItem("vendorProfile"); return p ? JSON.parse(p) : { name: "Acme Catering", brand: "Acme", email: "vendor@example.com", phone: "", picture: null }; }
+    catch { return { name: "Acme Catering", brand: "Acme", email: "vendor@example.com", phone: "", picture: null }; }
   });
 
-  const [modalPick, setModalPick] = useState(null);
-  const navigate = useNavigate();
+  // Waiter list (mock)
+  const [waiters] = useState(() =>
+    Array.from({ length: 12 }).map((_, i) => ({
+      id: i + 1,
+      name: `Waiter ${i + 1}`,
+      location: ["Lagos", "Abuja", "Enugu", "Kano"][i % 4],
+      exp: `${1 + (i % 5)} yrs`,
+      skills: i % 2 === 0 ? "Service" : "Bar",
+      picture: `https://i.pravatar.cc/150?img=${10 + i}`
+    }))
+  );
+
+  const [selectedWaiter, setSelectedWaiter] = useState(null); // currently selected in list
+  const [modalPick, setModalPick] = useState(null); // saved pick detail modal
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     AOS.init({ duration: 600, once: true });
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -263,6 +226,33 @@ export default function VendorDashboard() {
     localStorage.setItem("vendorProfile", JSON.stringify(profile));
   }, [profile]);
 
+  const openTab = (tab) => {
+    setActive(tab);
+    if (isMobile) setIsOpen(false);
+    setSelectedWaiter(null);
+  };
+
+  const addPick = (waiter) => {
+    if (!waiter) return;
+    if (savedPicks.some(w => w.id === waiter.id)) {
+      alert("Already picked");
+      return;
+    }
+    setSavedPicks(s => [waiter, ...s]);
+    setModalPick(waiter);
+  };
+
+  const removePick = (id) => {
+    setSavedPicks(s => s.filter(w => w.id !== id));
+    if (modalPick?.id === id) setModalPick(null);
+  };
+
+  const openPickDetail = (waiter) => setModalPick(waiter);
+
+  const updateBookingStatus = (id, status) => setBookings(b => b.map(x => x.id === id ? { ...x, status } : x));
+
+  const saveProfile = (data) => setProfile(data);
+
   const logout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("user");
@@ -270,42 +260,12 @@ export default function VendorDashboard() {
     }
   };
 
-  const openTab = (tab) => {
-    setActive(tab);
-    if (window.innerWidth <= 768) setIsOpen(false);
-  };
-
-  /* ---------- picks handlers ---------- */
-  const addPick = (waiter) => {
-    if (!waiter) return;
-    if (savedPicks.some((w) => w.id === waiter.id)) {
-      alert("Already picked");
-      return;
-    }
-    setSavedPicks((s) => [waiter, ...s]);
-    setModalPick(waiter);
-  };
-
-  const removePick = (id) => {
-    setSavedPicks((s) => s.filter((w) => w.id !== id));
-    if (modalPick?.id === id) setModalPick(null);
-  };
-
-  const openPickDetail = (waiter) => {
-    setModalPick(waiter);
-  };
-
-  /* ---------- bookings handlers ---------- */
-  const updateBookingStatus = (id, status) => {
-    setBookings((b) => b.map((x) => (x.id === id ? { ...x, status } : x)));
-  };
-
-  /* ---------- profile save ---------- */
-  const saveProfile = (data) => setProfile(data);
+  // Close mobile detail panel
+  const closeMobileDetail = () => setSelectedWaiter(null);
 
   return (
     <div className="vendor-dashboard">
-      {/* sidebar */}
+      {/* Sidebar */}
       <aside className={`sidebar ${isOpen ? "open" : ""}`}>
         <div className="sidebar-top">
           <div className="logo">VendorPanel</div>
@@ -314,32 +274,22 @@ export default function VendorDashboard() {
 
         <nav>
           <ul>
-            <li className={active === "dashboard" ? "active" : ""}>
-              <button onClick={() => openTab("dashboard")}>Dashboard</button>
-            </li>
-            <li className={active === "waiters" ? "active" : ""}>
-              <button onClick={() => openTab("waiters")}>Waiters</button>
-            </li>
-            <li className={active === "bookings" ? "active" : ""}>
-              <button onClick={() => openTab("bookings")}>Bookings</button>
-            </li>
-            <li className={active === "profile" ? "active" : ""}>
-              <button onClick={() => openTab("profile")}>Profile</button>
-            </li>
-            <li>
-              <button onClick={logout} className="logout-link">Log out</button>
-            </li>
+            <li className={active === "dashboard" ? "active" : ""}><button onClick={() => openTab("dashboard")}>Dashboard</button></li>
+            <li className={active === "waiters" ? "active" : ""}><button onClick={() => openTab("waiters")}>Waiters</button></li>
+            <li className={active === "bookings" ? "active" : ""}><button onClick={() => openTab("bookings")}>Bookings</button></li>
+            <li className={active === "profile" ? "active" : ""}><button onClick={() => openTab("profile")}>Profile</button></li>
+            <li><button onClick={logout} className="logout-link">Log out</button></li>
           </ul>
         </nav>
       </aside>
 
-      {/* mobile backdrop */}
       {isOpen && <div className="backdrop" onClick={() => setIsOpen(false)}></div>}
 
+      {/* Main area */}
       <div className="main">
         <header className="topbar">
           <div className="left">
-            <button className="hamburger" onClick={() => setIsOpen((v) => !v)}>☰</button>
+            <button className="hamburger" onClick={() => setIsOpen(v => !v)} aria-label="Toggle menu">☰</button>
             <div className="title">
               <h1>Welcome, Vendor</h1>
               <div className="muted">Manage your waiters, bookings and profile</div>
@@ -348,39 +298,80 @@ export default function VendorDashboard() {
 
           <div className="right">
             <button className="btn ghost" onClick={() => navigate("/vendor-register")}>Create listing</button>
-            <button className="btn primary" onClick={logout}>Logout</button>
           </div>
         </header>
 
         <main className="content">
-          {active === "dashboard" && (
-            <DashboardHome
-              savedPicks={savedPicks}
-              bookings={bookings}
-              openPickDetail={openPickDetail}
-            />
+          {active === "dashboard" && <DashboardHome savedPicks={savedPicks} bookings={bookings} openPickDetail={openPickDetail} />}
+
+          {active === "waiters" && (
+            <div className="page-panel waiters-panel" data-aos="fade-up">
+              <h2>Waiters</h2>
+
+              <div className="waiters-grid">
+                {/* left: list */}
+                <WaitersList waiters={waiters} selected={selectedWaiter} setSelected={setSelectedWaiter} />
+
+                {/* right: desktop detail */}
+                {!isMobile && (
+                  <div className="waiter-detail">
+                    {selectedWaiter ? (
+                      <>
+                        <div className="detail-header">
+                          <img src={selectedWaiter.picture} alt={selectedWaiter.name} className="profile-pic" />
+                          <h3>{selectedWaiter.name}</h3>
+                          <div className="muted">{selectedWaiter.location} • {selectedWaiter.exp}</div>
+                        </div>
+
+                        <p><strong>Skills:</strong> {selectedWaiter.skills}</p>
+                        <div className="detail-actions">
+                          <button className="btn primary" onClick={() => addPick(selectedWaiter)}>Pick</button>
+                          <button className="btn ghost">Message</button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="empty"><p>Select a waiter from the list to view details</p></div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile slide-up panel */}
+              {isMobile && selectedWaiter && (
+                <div className="mobile-detail" role="dialog" aria-label={`${selectedWaiter.name} detail`}>
+                  <button className="mobile-close" onClick={closeMobileDetail} aria-label="Close detail">✕</button>
+                  <div className="mobile-detail-body">
+                    <img className="profile-pic" src={selectedWaiter.picture} alt={selectedWaiter.name} />
+                    <h3>{selectedWaiter.name}</h3>
+                    <div className="muted">{selectedWaiter.location} • {selectedWaiter.exp}</div>
+                    <p style={{marginTop:12}}><strong>Skills:</strong> {selectedWaiter.skills}</p>
+                    <div className="detail-actions" style={{marginTop:12}}>
+                      <button className="btn primary" onClick={() => { addPick(selectedWaiter); closeMobileDetail(); }}>Pick</button>
+                      <button className="btn ghost" onClick={() => alert("Message action (not implemented)")}>Message</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
 
-          {active === "waiters" && <WaitersList addPick={addPick} />}
-
-          {active === "bookings" && (
-            <Bookings bookings={bookings} updateBookingStatus={updateBookingStatus} />
-          )}
+          {active === "bookings" && <Bookings bookings={bookings} updateBookingStatus={updateBookingStatus} />}
 
           {active === "profile" && <Profile profile={profile} saveProfile={saveProfile} />}
         </main>
       </div>
 
-      {/* modal for saved pick detail */}
+      {/* saved pick modal (overlay) */}
       {modalPick && (
         <div className="modal-backdrop" onClick={() => setModalPick(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3>{modalPick.name}</h3>
+            {modalPick.picture && <img src={modalPick.picture} alt={modalPick.name} className="profile-pic" style={{width:120,height:120}} />}
             <p><strong>Location:</strong> {modalPick.location}</p>
             <p><strong>Experience:</strong> {modalPick.exp}</p>
             <p><strong>Skills:</strong> {modalPick.skills}</p>
 
-            <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <div style={{display:"flex", gap:8, marginTop:12}}>
               <button className="btn primary" onClick={() => setModalPick(null)}>Close</button>
               <button className="btn" onClick={() => { removePick(modalPick.id); }}>Remove</button>
             </div>

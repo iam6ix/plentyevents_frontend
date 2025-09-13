@@ -5,7 +5,7 @@ import { FaApple } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./Auth.css";
-import vendorImg from "../images/iam.jpeg"; // swap with a vendor-specific image if you have one
+import vendorImg from "../images/iam.jpeg"; // swap with vendor-specific image
 
 const VendorRegister = () => {
   const navigate = useNavigate();
@@ -19,6 +19,8 @@ const VendorRegister = () => {
     officeAddress: "",
     phone: "",
     email: "",
+    password: "",
+    confirmPassword: "",
     cacFile: null,
     yearsOfOperation: "",
   });
@@ -39,13 +41,23 @@ const VendorRegister = () => {
     setError("");
     setSuccess("");
 
-    if (!formData.vendorName || !formData.brandName || !formData.email) {
+    if (!formData.vendorName || !formData.brandName || !formData.email || !formData.password) {
       setError("Please fill in all required fields.");
       return;
     }
 
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     // ✅ Save vendor in localStorage
-    const user = { role: "vendor", email: formData.email, name: formData.vendorName };
+    const user = {
+      role: "vendor",
+      email: formData.email,
+      name: formData.vendorName,
+      password: formData.password,
+    };
     localStorage.setItem("user", JSON.stringify(user));
 
     setSuccess("Vendor registration successful!");
@@ -118,6 +130,31 @@ const VendorRegister = () => {
                 required
                 className="input-field"
                 placeholder="Email Address"
+              />
+            </div>
+
+            {/* 🔑 Password fields */}
+            <div className="input-group">
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="input-field"
+                placeholder="Password"
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="input-field"
+                placeholder="Confirm Password"
               />
             </div>
 

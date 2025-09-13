@@ -33,17 +33,27 @@ const Login = () => {
       return;
     }
 
-    // ✅ Save to localStorage
-    const user = { email: formData.email, role: formData.role };
-    localStorage.setItem("user", JSON.stringify(user));
+    // 🔑 Get stored user from localStorage
+    const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (formData.role === "vendor") {
-      navigate("/vendor-dashboard");
+    if (
+      storedUser &&
+      storedUser.email === formData.email &&
+      storedUser.password === formData.password &&
+      storedUser.role === formData.role
+    ) {
+      // ✅ Login success
+      localStorage.setItem("user", JSON.stringify(storedUser));
+
+      if (formData.role === "vendor") {
+        navigate("/vendor-dashboard");
+      } else {
+        navigate("/worker-dashboard");
+      }
     } else {
-      navigate("/worker-dashboard");
+      setError("Invalid email, password, or role. Please try again.");
     }
   };
-
 
   return (
     <div className="auth-page">
@@ -131,7 +141,7 @@ const Login = () => {
           </div>
 
           <p className="switch-link">
-            Don’t have an account? <Link to="/register ">Register</Link>
+            Don’t have an account? <Link to="/register">Register</Link>
           </p>
         </div>
       </div>
