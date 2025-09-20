@@ -6,6 +6,8 @@ import "./Auth.css";
 import iamImg from "../images/tunde.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import api from "../api/axios.js"
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,13 +21,25 @@ const Login = () => {
     role: "",
   });
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+            const res = await api.post("./vendors/auth/login", formData)
+            setMessage("succesfully registered");
+            console.log(res.data);
+        } catch (error) {
+            if (error.response) {
+                setMessage(error.response.data.message || "Registration failed");
+            } else {
+                setMessage("Network error, please try again.")
+            }
+        };
     setError("");
 
     if (!formData.email || !formData.password || !formData.role) {
@@ -33,7 +47,7 @@ const Login = () => {
       return;
     }
 
-    // 🔑 Get stored user from localStorage
+    //  Get stored user from localStorage
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
     if (

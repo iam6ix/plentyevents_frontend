@@ -52,7 +52,7 @@ const Services = () => {
 
       <div className="services-cta" data-aos="zoom-in">
         <h2>Ready to Hire?</h2>
-        <button onClick={() => navigate("/vendor-register")}>Join Now</button>
+        <button onClick={() => navigate("/vendor-register ")}>Join Now</button>
       </div>
     </div>
   );
